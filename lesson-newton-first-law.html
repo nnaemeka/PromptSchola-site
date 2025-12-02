@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Newton’s First Law – PromptSchola Lesson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Learn Newton’s First Law using PromptSchola’s guided 7-step mastery system. Start free with Orient, Understand, and Apply prompts."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --text-subtle: #9ca3af;
+      --border-subtle: rgba(209,213,219,0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15,23,42,0.12);
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { display: flex; flex-direction: column; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* Header */
+    header {
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(209,213,219,0.7);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; }
+    .logo { font-weight: 700; font-size: 1rem; }
+
+    .btn-pill, .btn-primary, .btn-ghost {
+      display: inline-block;
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #a855f7, #6d28d9);
+      color: #fff;
+      border: none;
+    }
+    .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .btn-ghost {
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+    }
+    .btn-ghost:hover { background: #f3f4f6; }
+
+    /* Hero */
+    .hero { padding: 2.2rem 0 2rem; }
+    .hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .hero p { max-width: 35rem; color: var(--text-muted); }
+
+    /* Steps */
+    .steps { margin: 2rem 0; display: grid; gap: 1.1rem; }
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .step-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    .step-title { font-size: 1rem; font-weight: 600; }
+    .step-tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+    }
+    .step-tag.free { background: #dcfce7; color: #166534; border-color: #166534; }
+    .step-tag.mastery { background: #f3e8ff; color: #6b21a8; border-color: #6b21a8; }
+
+    .step-content {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-show-prompt {
+      border-radius: var(--radius-pill);
+      padding: 0.4rem 0.8rem;
+      font-size: 0.78rem;
+      border: none;
+      background: linear-gradient(to right, #a855f7, #6d28d9);
+      color: #fff;
+      cursor: pointer;
+    }
+    .btn-show-prompt:hover { filter: brightness(1.07); transform: translateY(-1px); }
+
+    /* Locked steps */
+    .locked {
+      filter: blur(3px);
+      pointer-events: none;
+      opacity: 0.55;
+    }
+    .unlock-panel {
+      background: #ffffffee;
+      text-align: center;
+      padding: 0.9rem;
+      border-radius: var(--radius-card);
+      margin-top: -2rem;
+      border: 1px dashed #a855f7;
+    }
+
+    /* Prompt modal */
+    .modal {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none; justify-content: center; align-items: center;
+    }
+    .modal.show { display: flex; }
+    .modal-content {
+      background: #fff; padding: 1rem 1.2rem;
+      border-radius: 12px; max-width: 500px;
+      font-size: 0.9rem; line-height: 1.45;
+      border: 1px solid var(--border-subtle);
+    }
+    .modal-content textarea {
+      width: 100%; height: 140px; margin-top: 0.4rem;
+      border: 1px solid var(--border-subtle); padding: 0.5rem;
+      border-radius: 8px; resize: none;
+    }
+    .modal-actions { display: flex; justify-content: space-between; margin-top: 0.6rem; }
+    .close { cursor: pointer; }
+
+    /* Footer */
+    footer { margin-top: auto; padding: 2rem 0; text-align: center; font-size: 0.78rem; color: var(--text-subtle); }
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a href="physics.html" class="logo">← Physics</a>
+        <a href="index.html#pricing" class="btn-primary">Unlock Mastery</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Newton’s First Law of Motion</h1>
+      <p>
+        Also called the Law of Inertia, Newton’s First Law states that an object remains at rest or in uniform motion
+        in a straight line unless acted upon by a net external force. Start below and let the prompts guide you.
+      </p>
+    </section>
+
+    <!-- 7 Steps -->
+    <section class="steps">
+
+      <!-- Step 1 -->
+      <article class="step-card">
+        <div class="step-header">
+          <span class="step-title">Step 1 — Orient</span>
+          <span class="step-tag free">Free</span>
+        </div>
+        <p class="step-content">Check what you already know and get a sense of the topic.</p>
+        <button class="btn-show-prompt" onclick="openPrompt(`In a concise and intuitive way, explain Newton’s First Law of Motion. Avoid equations for now and use real-world situations to make it relatable.`)">Show prompt</button>
+      </article>
+
+      <!-- Step 2 -->
+      <article class="step-card">
+        <div class="step-header">
+          <span class="step-title">Step 2 — Understand</span>
+          <span class="step-tag free">Free</span>
+        </div>
+        <p class="step-content">Build intuition with simple language and examples.</p>
+        <button class="btn-show-prompt" onclick="openPrompt(`Provide a deeper explanation of Newton’s First Law and describe why objects resist changes to their motion, using the concept of inertia. Include clear, everyday examples.`)">Show prompt</button>
+      </article>
+
+      <!-- Step 3 -->
+      <article class="step-card">
+        <div class="step-header">
+          <span class="step-title">Step 3 — Apply</span>
+          <span class="step-tag free">Free</span>
+        </div>
+        <p class="step-content">Connect the law to real systems in engineering, medicine, and science.</p>
+        <button class="btn-show-prompt" onclick="openPrompt(`Explain three real-world applications of Newton’s First Law: one in engineering, one in medicine, and one in everyday life. Show why inertia matters in each case.`)">Show prompt</button>
+      </article>
+
+      <!-- Locked Steps (Mastery Access) -->
+      <div class="locked">
+        <!-- Step 4 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 4 — Work Through It</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">Solve worked examples step-by-step, with reasoning.</p>
+        </article>
+
+        <!-- Step 5 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 5 — Summary</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">Compress the core ideas, formulas, and common misconceptions.</p>
+        </article>
+
+        <!-- Step 6 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 6 — Practice</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">Get practice questions and download detailed PDF solutions.</p>
+        </article>
+
+        <!-- Step 7 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 7 — Experiment</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">Explore a simulation, lab, or visualization to “see” inertia.</p>
+        </article>
+      </div>
+
+      <!-- Unlock CTA -->
+      <div class="unlock-panel">
+        These steps require Mastery Access.<br>
+        <a href="index.html#pricing" class="btn-primary" style="margin-top:0.5rem; display:inline-block;">
+          Unlock full Physics
+        </a>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Modal for prompts -->
+  <div class="modal" id="promptModal">
+    <div class="modal-content">
+      <strong>Copy this prompt:</strong>
+      <textarea id="promptText"></textarea>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="copyPrompt()">Copy prompt</button>
+        <span class="close" onclick="closePrompt()">Close</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © <span id="year"></span> PromptSchola · Guided AI learning
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function openPrompt(text) {
+    document.getElementById('promptText').value = text;
+    document.getElementById('promptModal').classList.add('show');
+  }
+
+  function closePrompt() {
+    document.getElementById('promptModal').classList.remove('show');
+  }
+
+  function copyPrompt() {
+    const textarea = document.getElementById('promptText');
+    textarea.select();
+    document.execCommand('copy');
+    alert('Prompt copied!');
+  }
+</script>
+</body>
+</html>
