@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Log in / Create Account – PromptSchola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Log in or create your PromptSchola account to unlock Mastery Access."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --text-subtle: #9ca3af;
+      --border-subtle: rgba(209,213,219,0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15,23,42,0.12);
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 420px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* Header */
+    header {
+      padding: 1rem 0 0.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      justify-content: center;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #f9fafb;
+      box-shadow: none;
+    }
+
+    .logo-text {
+      text-align: left;
+    }
+
+    .logo-text span:first-child {
+      display: block;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      color: var(--text-main);
+    }
+
+    .logo-text span:last-child {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-subtle);
+    }
+
+    /* Card */
+    .auth-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 0 2rem;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1.2rem 1.4rem 1.4rem;
+      width: 100%;
+      font-size: 0.9rem;
+    }
+
+    .auth-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      text-align: center;
+      color: var(--text-main);
+    }
+
+    .auth-subtitle {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-radius: var(--radius-pill);
+      background: #f3f4f6;
+      padding: 0.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: var(--transition-fast);
+    }
+
+    .tab.active {
+      background: #ffffff;
+      color: var(--accent-strong);
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(148,163,184,0.4);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    input {
+      width: 100%;
+      padding: 0.45rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #7e22ce;
+      box-shadow: 0 0 0 1px rgba(126,34,206,0.25);
+    }
+
+    .helper-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+    }
+
+    .helper-row a {
+      color: #4f46e5;
+    }
+
+    .helper-row a:hover {
+      color: #7e22ce;
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 0.9rem;
+      border: none;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 600;
+      background: linear-gradient(to right, #a855f7, #6d28d9);
+      color: #ffffff;
+      width: 100%;
+      margin-top: 0.5rem;
+      box-shadow: none;
+      transition: var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    .auth-footer {
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+
+    .auth-footer a {
+      color: #4f46e5;
+    }
+
+    .auth-footer a:hover {
+      color: #7e22ce;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      padding-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="container">
+      <a href="index.html" style="font-size:0.78rem;color:#6b7280;">← Back to home</a>
+      <div class="brand">
+        <div class="logo-mark">P</div>
+        <div class="logo-text">
+          <span>PromptSchola</span>
+          <span>Prompt-based STEM mastery</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="auth-wrapper">
+    <div class="container">
+      <div class="auth-card">
+        <div class="auth-title">Welcome to PromptSchola</div>
+        <div class="auth-subtitle">
+          Stop guessing what to ask AI — start learning with purpose.<br>
+          Log in or create an account to unlock Mastery.
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" id="tab-login" onclick="switchTab('login')">Log in</div>
+          <div class="tab" id="tab-signup" onclick="switchTab('signup')">Create account</div>
+        </div>
+
+        <!-- Login form -->
+        <form id="form-login">
+          <div>
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="••••••••" />
+          </div>
+          <div class="helper-row">
+            <span></span>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="button" class="btn-primary">
+            Log in
+          </button>
+        </form>
+
+        <!-- Signup form -->
+        <form id="form-signup" style="display:none;">
+          <div>
+            <label for="signup-name">Name</label>
+            <input type="text" id="signup-name" placeholder="Your name" />
+          </div>
+          <div>
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" placeholder="Create a password" />
+          </div>
+          <button type="button" class="btn-primary">
+            Create account
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          By continuing, you agree to the PromptSchola <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © <span id="year"></span> PromptSchola
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function switchTab(mode) {
+    const tabLogin = document.getElementById('tab-login');
+    const tabSignup = document.getElementById('tab-signup');
+    const formLogin = document.getElementById('form-login');
+    const formSignup = document.getElementById('form-signup');
+
+    if (mode === 'login') {
+      tabLogin.classList.add('active');
+      tabSignup.classList.remove('active');
+      formLogin.style.display = 'flex';
+      formSignup.style.display = 'none';
+    } else {
+      tabSignup.classList.add('active');
+      tabLogin.classList.remove('active');
+      formSignup.style.display = 'flex';
+      formLogin.style.display = 'none';
+    }
+  }
+</script>
+</body>
+</html>
