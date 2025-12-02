@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Limits & Continuity – PromptSchola Lesson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Learn Limits & Continuity using PromptSchola’s guided 7-step mastery system. Start free with Orient, Understand, and Apply prompts."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --text-subtle: #9ca3af;
+      --border-subtle: rgba(209,213,219,0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15,23,42,0.12);
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { display: flex; flex-direction: column; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* Header */
+    header {
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(209,213,219,0.7);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; }
+    .logo { font-weight: 700; font-size: 0.95rem; }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1.1rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(to right, #a855f7, #6d28d9);
+      color: #fff;
+      box-shadow: none;
+      transition: var(--transition-fast);
+      font-weight: 600;
+    }
+    .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1.1rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+      color: var(--text-main);
+      transition: var(--transition-fast);
+    }
+    .btn-ghost:hover { background: #f3f4f6; }
+
+    /* Hero */
+    .hero { padding: 2.2rem 0 2rem; }
+    .hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .hero p { max-width: 35rem; color: var(--text-muted); font-size: 0.93rem; }
+
+    .hero-meta {
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    /* Steps */
+    .steps { margin: 2rem 0; display: grid; gap: 1.1rem; }
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .step-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    .step-title { font-size: 1rem; font-weight: 600; }
+    .step-tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+    }
+    .step-tag.free { background: #dcfce7; color: #166534; border-color: #166534; }
+    .step-tag.mastery { background: #f3e8ff; color: #6b21a8; border-color: #6b21a8; }
+
+    .step-content {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-show-prompt {
+      border-radius: var(--radius-pill);
+      padding: 0.4rem 0.8rem;
+      font-size: 0.78rem;
+      border: none;
+      background: linear-gradient(to right, #a855f7, #6d28d9);
+      color: #fff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .btn-show-prompt:hover { filter: brightness(1.07); transform: translateY(-1px); }
+
+    /* Locked steps */
+    .locked {
+      filter: blur(3px);
+      pointer-events: none;
+      opacity: 0.55;
+    }
+    .unlock-panel {
+      background: #ffffffee;
+      text-align: center;
+      padding: 0.9rem;
+      border-radius: var(--radius-card);
+      margin-top: -2rem;
+      border: 1px dashed #a855f7;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    /* Prompt modal */
+    .modal {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none; justify-content: center; align-items: center;
+      z-index: 60;
+    }
+    .modal.show { display: flex; }
+    .modal-content {
+      background: #fff; padding: 1rem 1.2rem;
+      border-radius: 12px; max-width: 520px;
+      font-size: 0.9rem; line-height: 1.45;
+      border: 1px solid var(--border-subtle);
+    }
+    .modal-content textarea {
+      width: 100%; height: 160px; margin-top: 0.4rem;
+      border: 1px solid var(--border-subtle); padding: 0.5rem;
+      border-radius: 8px; resize: none; font-size: 0.85rem;
+    }
+    .modal-actions { display: flex; justify-content: space-between; margin-top: 0.6rem; align-items: center; }
+    .close { cursor: pointer; font-size: 0.8rem; color: var(--text-subtle); }
+
+    /* Footer */
+    footer { margin-top: auto; padding: 2rem 0; text-align: center; font-size: 0.78rem; color: var(--text-subtle); }
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a href="math.html" class="logo">← Math</a>
+        <div style="display:flex;gap:0.5rem;">
+          <button class="btn-ghost" onclick="window.location.href='index.html'">Home</button>
+          <button class="btn-primary" onclick="window.location.href='pricing.html'">Unlock Mastery</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Limits &amp; Continuity</h1>
+      <p>
+        Limits are the foundation of calculus. They describe what value a function is approaching, even when it doesn’t
+        actually reach that value. Continuity captures when a function behaves “smoothly” with no jumps or holes.
+        Use the prompts below to build intuition step by step.
+      </p>
+      <div class="hero-meta">
+        Suggested background: algebra &amp; basic functions · Typical course: Calculus I
+      </div>
+    </section>
+
+    <!-- 7 Steps -->
+    <section class="steps">
+
+      <!-- Step 1 -->
+      <article class="step-card">
+        <div class="step-header">
+          <span class="step-title">Step 1 — Orient</span>
+          <span class="step-tag free">Free</span>
+        </div>
+        <p class="step-content">
+          Get a big-picture idea of what limits are and why they matter, without formal definitions yet.
+        </p>
+        <button class="btn-show-prompt" onclick="openPrompt(`In a concise and intuitive way, explain what a limit is in calculus. Avoid formal epsilon–delta definitions for now. Use simple graphs and everyday analogies (like approaching a door or a speed limit) to make the idea feel natural.`)">
+          Show prompt
+        </button>
+      </article>
+
+      <!-- Step 2 -->
+      <article class="step-card">
+        <div class="step-header">
+          <span class="step-title">Step 2 — Understand</span>
+          <span class="step-tag free">Free</span>
+        </div>
+        <p class="step-content">
+          Deepen your understanding: approaching values, one-sided limits, and what can go wrong.
+        </p>
+        <button class="btn-show-prompt" onclick="openPrompt(`Give a deeper explanation of limits and continuity suitable for a first university calculus course. 
+1) Explain what it means for \\(\\lim_{x \\to a} f(x)\\) to exist. 
+2) Describe one-sided limits and situations where the left and right limits differ. 
+3) Explain continuity at a point and give examples of functions with removable, jump, and infinite discontinuities. 
+Use clear language and simple sketches in words (describe the graphs).`)">
+          Show prompt
+        </button>
+      </article>
+
+      <!-- Step 3 -->
+      <article class="step-card">
+        <div class="step-header">
+          <span class="step-title">Step 3 — Apply</span>
+          <span class="step-tag free">Free</span>
+        </div>
+        <p class="step-content">
+          See how limits and continuity appear in physics, engineering, and data modeling.
+        </p>
+        <button class="btn-show-prompt" onclick="openPrompt(`Show three concrete applications of limits and continuity: 
+• one in physics (for example, instantaneous velocity), 
+• one in engineering (for example, stress/strain or signal processing), 
+• and one in data science or probability (for example, convergence of sums or probabilities). 
+For each example, explain briefly how the concept of a limit or continuity is used and why it matters.`)">
+          Show prompt
+        </button>
+      </article>
+
+      <!-- Locked Steps (Mastery Access) -->
+      <div class="locked">
+        <!-- Step 4 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 4 — Work Through It</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">
+            Work through several fully solved examples: computing limits from graphs, from tables, and using algebraic simplification, including removable discontinuities.
+          </p>
+        </article>
+
+        <!-- Step 5 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 5 — Summary</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">
+            Get a compact summary of definitions, key limit laws, continuity conditions, and the most common mistakes students make.
+          </p>
+        </article>
+
+        <!-- Step 6 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 6 — Practice</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">
+            Practice with a graded set of problems: numerical limits, one-sided limits, piecewise functions, and continuity checks, with detailed step-by-step solutions (PDF-ready).
+          </p>
+        </article>
+
+        <!-- Step 7 -->
+        <article class="step-card">
+          <div class="step-header">
+            <span class="step-title">Step 7 — Experiment</span>
+            <span class="step-tag mastery">Mastery</span>
+          </div>
+          <p class="step-content">
+            Explore interactive visualizations or simulations where you move points along a graph and watch how function values approach a limit and reveal discontinuities.
+          </p>
+        </article>
+      </div>
+
+      <!-- Unlock CTA -->
+      <div class="unlock-panel">
+        These steps require Mastery Access.<br>
+        <button class="btn-primary" style="margin-top:0.5rem;" onclick="window.location.href='pricing.html'">
+          Unlock full Math Mastery
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Modal for prompts -->
+  <div class="modal" id="promptModal">
+    <div class="modal-content">
+      <strong>Copy this prompt:</strong>
+      <textarea id="promptText"></textarea>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="copyPrompt()">Copy prompt</button>
+        <span class="close" onclick="closePrompt()">Close</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © <span id="year"></span> PromptSchola · Guided AI learning for Math
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function openPrompt(text) {
+    document.getElementById('promptText').value = text;
+    document.getElementById('promptModal').classList.add('show');
+  }
+
+  function closePrompt() {
+    document.getElementById('promptModal').classList.remove('show');
+  }
+
+  function copyPrompt() {
+    const textarea = document.getElementById('promptText');
+    textarea.select();
+    document.execCommand('copy');
+    alert('Prompt copied!');
+  }
+</script>
+</body>
+</html>
