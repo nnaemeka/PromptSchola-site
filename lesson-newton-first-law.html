@@ -275,25 +275,90 @@
   </div>
 </article>
 
-      <!-- Step 2 -->
-      <article class="step-card">
-        <div class="step-header">
-          <span class="step-title">Step 2 — Understand</span>
-          <span class="step-tag free">Free</span>
-        </div>
-        <p class="step-content">Build intuition with simple language and examples.</p>
-        <button class="btn-show-prompt" onclick="openPrompt(`Provide a deeper explanation of Newton’s First Law and describe why objects resist changes to their motion, using the concept of inertia. Include clear, everyday examples.`)">Show prompt</button>
-      </article>
+     <!-- Step 2 -->
+<article class="step-card">
+  <div class="step-header">
+    <span class="step-title">Step 2 — Understand</span>
+    <span class="step-tag free">Free</span>
+  </div>
+  <p class="step-content">
+    Build deeper intuition for Newton’s First Law and the idea of inertia, using clear language and everyday examples.
+  </p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+    <!-- Show prompt: always available -->
+    <button
+      class="btn-show-prompt"
+      onclick="openPrompt(`Provide a deeper explanation of Newton’s First Law and describe why objects resist changes to their motion, using the concept of inertia. Include clear, everyday examples.`)"
+    >
+      Show prompt
+    </button>
+
+    <!-- Run with AI: enabled only for Mastery -->
+    <button
+      id="step2-run-btn"
+      class="btn-ghost"
+      onclick="handleRunWithAI('physics','newton-first-law',2)"
+    >
+      Run with AI inside PromptSchola
+    </button>
+
+    <!-- Hint text changes based on plan -->
+    <span id="step2-hint" style="font-size:0.75rem;color:#9ca3af;"></span>
+  </div>
+
+  <!-- AI output area -->
+  <div
+    id="step2-output"
+    style="font-size:0.85rem;color:#374151;background:#f9fafb;border:1px solid rgba(209,213,219,0.7);border-radius:10px;padding:0.6rem 0.7rem;min-height:2.1rem;"
+  >
+    <span style="font-size:0.8rem;color:#9ca3af;">AI output will appear here when available.</span>
+  </div>
+</article>
+
 
       <!-- Step 3 -->
-      <article class="step-card">
-        <div class="step-header">
-          <span class="step-title">Step 3 — Apply</span>
-          <span class="step-tag free">Free</span>
-        </div>
-        <p class="step-content">Connect the law to real systems in engineering, medicine, and science.</p>
-        <button class="btn-show-prompt" onclick="openPrompt(`Explain three real-world applications of Newton’s First Law: one in engineering, one in medicine, and one in everyday life. Show why inertia matters in each case.`)">Show prompt</button>
-      </article>
+      <!-- Step 3 -->
+<article class="step-card">
+  <div class="step-header">
+    <span class="step-title">Step 3 — Apply</span>
+    <span class="step-tag free">Free</span>
+  </div>
+  <p class="step-content">
+    Connect Newton’s First Law to real systems in engineering, medicine, and everyday life.
+  </p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+    <!-- Show prompt: always available -->
+    <button
+      class="btn-show-prompt"
+      onclick="openPrompt(`Explain three real-world applications of Newton’s First Law: one in engineering, one in medicine, and one in everyday life. Show why inertia matters in each case.`)"
+    >
+      Show prompt
+    </button>
+
+    <!-- Run with AI: enabled only for Mastery -->
+    <button
+      id="step3-run-btn"
+      class="btn-ghost"
+      onclick="handleRunWithAI('physics','newton-first-law',3)"
+    >
+      Run with AI inside PromptSchola
+    </button>
+
+    <!-- Hint text changes based on plan -->
+    <span id="step3-hint" style="font-size:0.75rem;color:#9ca3af;"></span>
+  </div>
+
+  <!-- AI output area -->
+  <div
+    id="step3-output"
+    style="font-size:0.85rem;color:#374151;background:#f9fafb;border:1px solid rgba(209,213,219,0.7);border-radius:10px;padding:0.6rem 0.7rem;min-height:2.1rem;"
+  >
+    <span style="font-size:0.8rem;color:#9ca3af;">AI output will appear here when available.</span>
+  </div>
+</article>
+
 
       <!-- Locked Steps (Mastery Access) -->
       <div class="locked">
