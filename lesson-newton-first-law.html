@@ -426,17 +426,40 @@
 </div>
 
 <script>
-  // Set footer year
+  // Footer year
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Simulate the current user's plan:
-  // "free"    – can see Run button but not use it
-  // "mastery" – can use Run with AI (when backend exists)
-  const userPlan = "free"; // change to "mastery" to preview Mastery behavior
+  // Start with a default; will be updated by /api/me
+  let userPlan = "free";
 
   document.addEventListener("DOMContentLoaded", () => {
-    setupStep1PlanState();
+    // 1) Ask backend who the user is and what plan they have
+    fetchUserPlan().then(() => {
+      // 2) Then set up Step 1 UI based on that plan
+      setupStep1PlanState();
+    }).catch(() => {
+      // If something fails, still show UI as free
+      setupStep1PlanState();
+    });
   });
+
+  async function fetchUserPlan() {
+    try {
+      const res = await fetch("/api/me", {
+        method: "GET",
+        credentials: "include"
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      if (data && data.loggedIn && data.plan) {
+        userPlan = data.plan; // "free" or "mastery"
+      }
+    } catch (err) {
+      console.error("Could not fetch user plan", err);
+    }
+  }
 
   function setupStep1PlanState() {
     const btn = document.getElementById("step1-run-btn");
@@ -460,29 +483,39 @@
     }
   }
 
-  // Future: call your /api/run-step endpoint.
-  // For now we just mock the AI response.
+  // Call the backend to run AI for this step
   async function handleRunWithAI(subject, topic, stepNumber) {
     const outputEl = document.getElementById(`step${stepNumber}-output`);
     if (!outputEl) return;
 
     if (userPlan !== "mastery") {
-      // Extra safety check (should be blocked by disabled button)
       alert("This feature is available with Mastery Access.");
       return;
     }
 
-    // Mock loading state
     outputEl.textContent = "Asking the AI tutor...";
 
-    // TODO: Replace this with a real fetch('/api/run-step', {...}) call later
-    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const res = await fetch("/api/run-step", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subject, topic, stepNumber })
+      });
 
-    outputEl.textContent =
-      "This is where your AI tutor’s explanation will appear. In production, this text would come from your Vercel serverless function calling OpenAI with the Step 1 prompt for Newton’s First Law.";
+      if (!res.ok) {
+        outputEl.textContent = "Something went wrong. Please try again.";
+        return;
+      }
+
+      const data = await res.json();
+      outputEl.textContent = data.content || "No content returned.";
+    } catch (err) {
+      console.error(err);
+      outputEl.textContent = "Network error. Please try again.";
+    }
   }
 
-  // Existing modal functions
+  // Existing modal functions for "Show prompt"
   function openPrompt(text) {
     document.getElementById('promptText').value = text;
     document.getElementById('promptModal').classList.add('show');
